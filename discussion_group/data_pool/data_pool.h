@@ -17,13 +17,13 @@ public:
 private:
     data_pool(const data_pool&);
 private:
-    int cap;
-    int size;
-    int product_step;
-    int consumer_step;
-    sem_t blank;
-    sem_t data;
-    std::vector<std::string> pool;
+    int cap;//数据池总容量
+    int size;//当前大小
+    int product_step;//生产者
+    int consumer_step;//消费者
+    sem_t blank;//空格信号量
+    sem_t data;//数据信号量
+    std::vector<std::string> pool;//用vector，环形数组来存
 };
 
-#endif
+#endif //__DATA_POOL_H__
