@@ -3,7 +3,7 @@ chtype v = '*';
 //初始化
 window::window()
 {
-    initscr();
+    initscr();//初始化
 
 }
 
@@ -30,12 +30,12 @@ void window::getStringFromWin(WINDOW* win,std::string &outString)
 void window::putStringToWin(WINDOW* win,int start_y,int start_x,\
                             std::string &msg)
 {
-    mvwaddstr(win,start_y,start_x,msg.c_str());
+    mvwaddstr(win,start_y,start_x,msg.c_str());//在Window上显示字符串
 }
 
 void window::wrefreshMyWindow(WINDOW* win)
 {
-    wrefresh(win);
+    wrefresh(win);//刷新屏幕
 }
 
 void window::createHeader()
@@ -76,16 +76,16 @@ void window::createinput()
     int y = LINES*4/5;
     int x = 0;
     input = newwin(h,w,y,x);
-    box(input,v,v);
+    box(input,v,v);//绘制窗口
 }
 
 window::~window()
 {
-    delwin(header);
+    delwin(header);//删除每个窗口
     delwin(output);
     delwin(friend_list);
     delwin(input);
-    endwin();
+    endwin();//关闭句柄
 }
 
 #ifdef _DEBUG_
@@ -120,7 +120,7 @@ int main()
     std::string str;
     win.getStringFromWin(win.input,str);
 
-    getmaxyx(win.output,h,w); 
+    getmaxyx(win.output,h,w); //获得 x,y
     win.putStringToWin(win.output,1,1,str);
     win.wrefreshMyWindow(win.output);
     }
