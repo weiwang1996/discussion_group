@@ -143,20 +143,21 @@ void sendQuit(int sig)
 //./client 125.0.0.1 8080 nick_name school
 int main(int argc,char *argv[])
 {
+    //输入 ip地址 端口号，昵称和学校
     if(argc!=5)
     {
         usage(argv[0]);
         exit(1);
     }
     int port = atoi(argv[2]);
-    udpClient cli(argv[1],port);
+    udpClient cli(argv[1],port);构造一个客户端对象
 
-    sig_cli = &cli;
+    sig_cli = &cli;//udpClient* 
 
     //退出信号发给进程
     struct sigaction act;
-    act.sa_handler = sendQuit;
-    act.sa_flags = 0;
+    act.sa_handler = sendQuit;//自定义函数来捕捉信号
+    act.sa_flags = 0;//默认设置为0
     sigemptyset(&act.sa_mask);
     sigaction(2,&act,NULL);
 
@@ -168,11 +169,12 @@ int main(int argc,char *argv[])
     pthread_t middle;
     pthread_t buttom;
 
-    //维护窗口 头 中部 下部
+    //三个线程分别维护窗口 头 中部 下部
    pthread_create(&top,NULL,run_header,NULL);
    pthread_create(&middle,NULL,run_output_friend,(void*)&cli);
    pthread_create(&buttom,NULL,run_input,(void*)&cli);
 
+    //主线程等待，避免退出产生僵尸
    pthread_join(top,NULL);
    pthread_join(middle,NULL);
    pthread_join(buttom,NULL);
@@ -183,7 +185,7 @@ int main(int argc,char *argv[])
 //        //std::string sendString;
 //        dataType data;
 //        data.nick_name = "fly pig";
-//        data.school = "SUST";
+//        data.school = "XATU";
 //        data.msg = "hello world";
 //        data.cmd = "None";
 //        //data.valueToString(sendString);
